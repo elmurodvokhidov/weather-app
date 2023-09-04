@@ -1,27 +1,27 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AnimatedLoader from 'react-native-animated-loader';
+// import { StyleSheet, Text, View } from 'react-native';
 
 function Loader() {
     return (
-        <AnimatedLoader
-            visible={true}
-            overlayColor="rgba(255,255,255,0.75)"
-            source={require("../assets/animation_lm345c68.json")}
-            animationStyle={styles.lottie}
-            speed={2}
-        >
-            {/* <Text>Loading...</Text> */}
-        </AnimatedLoader>
+        <LottieView
+            autoPlay
+            style={{
+                flex: 1,
+                alignContent: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#eee',
+            }}
+            source={require('../assets/animation_lm345c68')}
+        />
     );
 }
 
-const styles = StyleSheet.create({
-    lottie: {
-        width: 300,
-        height: 300
-    }
-});
+// const styles = StyleSheet.create({
+//     lottie: {
+//         width: 300,
+//         height: 300
+//     }
+// });
 
 export default Loader;

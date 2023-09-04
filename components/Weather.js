@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 const weatherOptions = {
     Clear: {
@@ -68,12 +69,23 @@ const weatherOptions = {
 
 function Weather({ temp, name, condition }) {
     return (
-        <LinearGradient colors={weatherOptions[condition].gradient} style={styles.container}>
-            <MaterialCommunityIcons name={weatherOptions[condition].icon} />
-            <Text>{temp}</Text>
-            <Text>{name}</Text>
-            <Text>{weatherOptions[condition].title}</Text>
-            <Text>{weatherOptions[condition].description}</Text>
+        <LinearGradient colors={weatherOptions[condition].gradient} style={styles.mainContainer}>
+            <StatusBar barStyle={"light-content"} />
+            <View style={styles.container}>
+                <MaterialCommunityIcons name={weatherOptions[condition].icon} size={96} color={"white"} />
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.temp}>{temp}°C</Text>
+                    <Text style={styles.temp}> | {name}</Text>
+                </View>
+            </View>
+            <View style={{ ...styles.container, ...styles.textContainer }}>
+                <Text style={styles.text}>{weatherOptions[condition].title}</Text>
+                <Text style={styles.description}>{weatherOptions[condition].description}</Text>
+                <View style={styles.searchContainer}>
+                    <TextInput placeholder="Search by city name..." style={styles.input} />
+                    <Button title='Search' style={styles.btn} />
+                </View>
+            </View>
         </LinearGradient>
     );
 }
@@ -81,9 +93,47 @@ function Weather({ temp, name, condition }) {
 export default Weather;
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    temp: {
+        fontSize: 42,
+        color: 'white',
+    },
+    textContainer: {
+        flex: 1,
+    },
+    text: {
+        color: 'white',
+        fontSize: 44,
+        fontWeight: 300,
+        marginBottom: 10,
+    },
+    description: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 600,
+    },
+    searchContainer: {
+        backgroundColor: '#e8e8e8e',
+        width: '100%',
+        padding: 10,
+        marginTop: 10,
+        position: 'relative',
+        flexDirection: 'row',
+        alignContent: 'center',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+    },
+    input: {
+        width: '70%',
+    },
+    btn: {
+        width: '30%',
     }
 })
