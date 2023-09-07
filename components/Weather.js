@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -67,7 +67,9 @@ const weatherOptions = {
     },
 };
 
-function Weather({ temp, name, condition }) {
+function Weather({ temp, name, condition, setWeather }) {
+    const [query, setQuery] = useState("");
+
     return (
         <LinearGradient colors={weatherOptions[condition].gradient} style={styles.mainContainer}>
             <StatusBar barStyle={"light-content"} />
@@ -82,8 +84,8 @@ function Weather({ temp, name, condition }) {
                 <Text style={styles.text}>{weatherOptions[condition].title}</Text>
                 <Text style={styles.description}>{weatherOptions[condition].description}</Text>
                 <View style={styles.searchContainer}>
-                    <TextInput placeholder="Search by city name..." style={styles.input} />
-                    <Button title='Search' style={styles.btn} />
+                    <TextInput placeholder="Search by city name..." style={styles.input} value={query} onChangeText={text => setQuery(text)} />
+                    <Button title='Search' onPress={() => setWeather(query)} style={styles.btn} />
                 </View>
             </View>
         </LinearGradient>
@@ -107,28 +109,36 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 1,
+        paddingHorizontal: 40,
+        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
     text: {
+        width: '100%',
+        textAlign: 'justify',
         color: 'white',
         fontSize: 44,
-        fontWeight: 300,
+        fontWeight: '300',
         marginBottom: 10,
     },
     description: {
+        width: '100%',
         color: 'white',
         fontSize: 24,
-        fontWeight: 600,
+        fontWeight: '600',
+        textAlign: 'justify',
     },
     searchContainer: {
         backgroundColor: '#e8e8e8e',
         width: '100%',
         padding: 10,
-        marginTop: 10,
+        marginTop: 30,
         position: 'relative',
         flexDirection: 'row',
         alignContent: 'center',
         justifyContent: 'space-between',
-        borderRadius: 10,
+        borderRadius: 5,
+        backgroundColor: 'white'
     },
     input: {
         width: '70%',
